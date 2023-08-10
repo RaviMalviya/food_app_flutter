@@ -1,0 +1,30 @@
+{
+  "feed": [
+    {
+      "content": {
+        "totalTime": "50 min",
+        "images": [
+          {
+            "hostedLargeUrl": "https://lh3.googleusercontent.com/Sd_u2O9p_hwxK4xix_puCGAxWxtf7XyLe1Fhld-4xvxLGo39fYNEiOnij-sT_qn2jZDqWsnv393bqgD1ijoo7Q=s360"
+          }
+        ],
+        "name": "Homemade Strawberry Jam Recipe | Fresh Strawberry Jam Without Preservatives",
+        "id": "Homemade-Strawberry-Jam-Recipe-_-Fresh-Strawberry-Jam-Without-Preservatives-2476130",
+        "rating": 4
+      }
+    },
+    {
+      "content": {
+        "totalTime": "1 hr",
+        "images": [
+          {
+            "hostedLargeUrl": "https://lh3.googleusercontent.com/d7r4wwVc-ZBiSUl_r5X7n5Ip7fD_DteFAgwf7bfLHRaOC6TVY623pLSHv5-FipLQ3JBQwhjCQ1aVvFAfqlx1YWZ3XcA76kPFa6k=s360"
+          }
+        ],
+        "name": "Cauliflower Mac & Cheese Bites",
+        "id": "Cauliflower-Mac-_-Cheese-Bites-9571045",
+        "rating": 3
+      }
+    }
+  ]
+}

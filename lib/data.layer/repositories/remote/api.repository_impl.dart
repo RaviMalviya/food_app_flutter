@@ -1,5 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:food_app_flutter/core/error/exceptions.dart';
+import 'package:food_app_flutter/core/util/export.dart';
 import 'package:food_app_flutter/data.layer/data.sources/api.provider.dart';
 import '../../../core/error/failures.dart';
 import '../../../core/network/network_info.dart';
@@ -26,7 +27,11 @@ class ApiRepositoryImpl implements ApiRepository {
       var result = await provider.getRecipe();
       return Right(result);
     } on Exception catch (err) {
+      safePrint(err);
       return Left(exceptionToFailureMapper(err));
+    } catch (err) {
+      safePrint(err);
+      return Left(UnknownFailure());
     }
   }
 
