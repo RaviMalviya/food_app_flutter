@@ -17,6 +17,7 @@ class Recipe with EquatableMixin {
 
   @override
   List<Object?> get props => [
+        id,
         name,
         image,
         rating,
