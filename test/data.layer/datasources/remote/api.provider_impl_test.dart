@@ -1,4 +1,5 @@
 import 'package:food_app_flutter/core/error/exceptions.dart';
+import 'package:food_app_flutter/core/util/helpers.dart';
 import 'package:food_app_flutter/data.layer/data.sources/remote/api.provider_impl.dart';
 import 'package:food_app_flutter/data.layer/dto/recipe.dto.dart';
 import 'package:mockito/annotations.dart';
@@ -43,7 +44,7 @@ void main() {
       final call = apiProviderImpl.getRecipe;
       //assert
       expect(await call(), isA<List<RecipeDto>>());
-      print("Okay Success!!!");
+      safePrint("Okay Success!!!");
     });
 
     test('''getRecipe, should perform a GET request on URL
@@ -62,7 +63,7 @@ void main() {
       final call = apiProviderImpl.getRecipe;
       //assert
       expect(call(), throwsA(const TypeMatcher<ServerException>()));
-      print("Okay ServerException!!!");
+      safePrint("Okay ServerException!!!");
     });
 
   });

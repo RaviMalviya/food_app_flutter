@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:food_app_flutter/features.layer/bloc/home/home_event.dart';
-import 'package:food_app_flutter/features.layer/bloc/home/home_state.dart';
-import 'package:food_app_flutter/features.layer/ui.util/ui.helpers.dart';
-import 'package:food_app_flutter/features.layer/widgets/recipe_card.dart';
-import 'package:food_app_flutter/features.layer/bloc/home/home_bloc.dart';
+import 'package:food_app_flutter/presentation.layer/ui.util/ui.helpers.dart';
 import '../../domain.layer/entities/recipe.dart';
+import '../bloc/home/home_bloc.dart';
+import '../bloc/home/home_event.dart';
+import '../bloc/home/home_state.dart';
+import '../widgets/recipe_card.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});

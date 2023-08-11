@@ -1,9 +1,9 @@
 import 'dart:async';
-import 'package:food_app_flutter/features.layer/bloc/home/home_event.dart';
-import 'package:food_app_flutter/features.layer/bloc/home/home_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food_app_flutter/data.layer/repositories/remote/api.repository_impl.dart';
-import 'package:food_app_flutter/features.layer/ui.util/error.message.dart';
+import '../../ui.util/error.message.dart';
+import 'home_event.dart';
+import 'home_state.dart';
 
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
   final ApiRepositoryImpl repository;

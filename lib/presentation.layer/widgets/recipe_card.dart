@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:food_app_flutter/features.layer/widgets/image.text_card.dart';
+
+import 'image.text_card.dart';
 
 class RecipeCard extends StatelessWidget {
   final String imageUrl;
