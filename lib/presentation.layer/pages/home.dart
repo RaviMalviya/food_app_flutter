@@ -3,8 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food_app_flutter/presentation.layer/ui.util/ui.helpers.dart';
 import '../../domain.layer/entities/recipe.dart';
 import '../bloc/home/home_bloc.dart';
-import '../bloc/home/home_event.dart';
-import '../bloc/home/home_state.dart';
 import '../widgets/recipe_card.dart';
 
 class HomePage extends StatefulWidget {
@@ -50,7 +48,7 @@ class _HomePageState extends State<HomePage> {
           }
         },
         listener: (context, state) {
-          if (state is ShowSnackBarError) {
+          if (state is ShowSnackBar) {
             context.showSnackBarView(state.message);
           }
         },

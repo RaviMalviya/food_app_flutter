@@ -41,10 +41,9 @@ void main() {
       when(mockClient.get(uri, headers: headers)).thenAnswer(
           (_) async => http.Response(fixture('get_recipe.json'), 200));
       //act
-      final call = apiProviderImpl.getRecipe;
+      final result = await apiProviderImpl.getRecipe();
       //assert
-      expect(await call(), isA<List<RecipeDto>>());
-      safePrint("Okay Success!!!");
+      expect(result, isA<List<RecipeDto>>());
     });
 
     test('''getRecipe, should perform a GET request on URL
@@ -60,9 +59,9 @@ void main() {
       when(mockClient.get(uri, headers: headers)).thenAnswer(
               (_) => Future.value(http.Response('Not Found', 404)));
       //act
-      final call = apiProviderImpl.getRecipe;
+      final result = apiProviderImpl.getRecipe();
       //assert
-      expect(call(), throwsA(const TypeMatcher<ServerException>()));
+      expect(result, throwsA(const TypeMatcher<ServerException>()));
       safePrint("Okay ServerException!!!");
     });
 

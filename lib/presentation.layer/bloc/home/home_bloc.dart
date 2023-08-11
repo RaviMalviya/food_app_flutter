@@ -1,12 +1,17 @@
 import 'dart:async';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:food_app_flutter/data.layer/repositories/remote/api.repository_impl.dart';
+
+import 'package:bloc/bloc.dart';
+import 'package:equatable/equatable.dart';
+
+import 'package:food_app_flutter/domain.layer/repositories/api.repository.dart';
+import '../../../domain.layer/entities/recipe.dart';
 import '../../ui.util/error.message.dart';
-import 'home_event.dart';
-import 'home_state.dart';
+
+part 'home_event.dart';
+part 'home_state.dart';
 
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
-  final ApiRepositoryImpl repository;
+  final ApiRepository repository;
 
   HomeBloc({required this.repository}) : super(HomeInitial()) {
     on<GetRecipeEvent>(_fetchRecipeList);
@@ -20,15 +25,15 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
       result.fold((failure) {
         var errorMessage = ErrorMessageExt.enumName(failure: failure);
-        emit(ShowSnackBarError(errorMessage.text));
-        emit(HomeError('No Record Found'));
+        emit(ShowSnackBar(message: errorMessage.text));
+        emit(HomeError(message: 'No Record Found'));
       }, (recipes) {
         if (recipes.isNotEmpty) {
-          emit(ShowSnackBarError('You fetch Record Successfully'));
-          emit(HomeLoaded(recipes));
+          emit(ShowSnackBar(message: 'You fetch Record Successfully'));
+          emit(HomeLoaded(recipes: recipes));
         } else {
-          emit(ShowSnackBarError('No Record Found'));
-          emit(HomeError('No Record Found'));
+          emit(ShowSnackBar(message: 'No Record Found'));
+          emit(HomeError(message: 'No Record Found'));
         }
       });
     }

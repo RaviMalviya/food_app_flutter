@@ -13,8 +13,6 @@ import 'package:mockito/mockito.dart';
 import 'api.repository_impl_test.mocks.dart';
 
 @GenerateMocks([ApiProvider, NetworkInfo])
-// Fake class
-// class FakeRecipeDto extends Fake implements RecipeDto {}
 
 void main() {
   late ApiRepositoryImpl repositoryImpl;
