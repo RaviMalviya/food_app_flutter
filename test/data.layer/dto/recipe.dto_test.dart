@@ -22,8 +22,8 @@ void main() {
       final apiReferenceRawJson = "{\"id\":\"${referenceDto.id}\",\"name\":\"${referenceDto.name}\",\"images\":[{\"hostedLargeUrl\": \"${referenceDto.image}\"}],\"rating\":${referenceDto.rating}, \"totalTime\": \"${referenceDto.totalTime}\"}";
       final createdDto = RecipeDto.fromRawJson(apiReferenceRawJson);
       final json = createdDto.toRawJson();
-      expect(createdDto, referenceDto);
-      expect(json, referenceRawJson);
+      expect(createdDto, referenceDto, reason: 'model is not same');
+      expect(json, referenceRawJson, reason: 'json string is not same');
     });
   });
 }
