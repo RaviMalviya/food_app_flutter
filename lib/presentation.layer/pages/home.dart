@@ -38,13 +38,13 @@ class _HomePageState extends State<HomePage> {
       body: BlocConsumer<HomeBloc, HomeState>(
         builder: (context, state) {
           if (state is HomeLoading) {
-            return _buildShowLoaderMessage();
+            return const CenteredLoading();
           } else if (state is HomeError) {
-            return _buildShowMessage(state.message);
+            return CenteredMessage(message: state.message);
           } else if (state is HomeLoaded) {
-            return _buildMainContainer(state.recipes);
+            return HomeMenu(recipes: state.recipes);
           } else {
-            return _buildShowMessage('Something Went Wrong');
+            return const CenteredMessage(message: 'Something Went Wrong');
           }
         },
         listener: (context, state) {
@@ -55,29 +55,60 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
+}
 
-  Widget _buildShowLoaderMessage() {
-    return const Center(
-      child: CircularProgressIndicator(),
-    );
-  }
+class CenteredMessage extends StatelessWidget {
+  final String message;
+  const CenteredMessage({
+    super.key, required this.message,
+  });
 
-  Widget _buildShowMessage(String message) {
+  @override
+  Widget build(BuildContext context) {
     return Center(
       child: Text(message),
     );
   }
+}
 
-  Widget _buildMainContainer(List<Recipe> recipes) {
+class CenteredLoading extends StatelessWidget {
+  const CenteredLoading({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return const Center(
+      child: CircularProgressIndicator(),
+    );
+  }
+}
+
+class HomeMenu extends StatelessWidget {
+  final List<Recipe> recipes;
+  const HomeMenu({
+    super.key, required this.recipes,
+  });
+
+  @override
+  Widget build(BuildContext context) {
     return SafeArea(
       child: Container(
         margin: const EdgeInsets.only(left: 16.0, right: 16.0, top: 16.0),
-        child: _buildGuidedRecipes(recipes),
+        child: GuidedRecipes(recipes: recipes),
       ),
     );
   }
+}
 
-  Widget _buildGuidedRecipes(List<Recipe> recipes) {
+class GuidedRecipes extends StatelessWidget {
+  final List<Recipe> recipes;
+  const GuidedRecipes({
+    super.key, required this.recipes,
+  });
+
+  @override
+  Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -96,20 +127,17 @@ class _HomePageState extends State<HomePage> {
               childAspectRatio: 1.5,
             ),
             itemBuilder: (BuildContext context, int index) {
-              return _buildRecipeWidget(recipes[index]);
+              Recipe recipe = recipes[index];
+              return RecipeCard(
+                imageUrl: recipe.image,
+                name: recipe.name,
+                rating: recipe.rating,
+                totalTime: recipe.totalTime,
+              );
             },
           ),
         ),
       ],
-    );
-  }
-
-  Widget _buildRecipeWidget(Recipe recipe) {
-    return RecipeCard(
-      imageUrl: recipe.image,
-      name: recipe.name,
-      rating: recipe.rating,
-      totalTime: recipe.totalTime,
     );
   }
 }
