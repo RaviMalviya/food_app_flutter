@@ -27,10 +27,10 @@ class ApiRepositoryImpl implements ApiRepository {
       var result = await provider.getRecipe();
       return Right(result);
     } on Exception catch (err) {
-      safePrint(err);
+      // safePrint(err);
       return Left(exceptionToFailureMapper(err));
     } catch (err) {
-      safePrint(err);
+      // safePrint(err);
       return Left(UnknownFailure());
     }
   }

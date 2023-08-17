@@ -16,7 +16,7 @@ class AppGoRouter {
         pageBuilder: (context, state) {
           return MaterialPage(
             child: BlocProvider(
-              create: (_) =>  sl<HomeBloc>(),
+              create: (_) =>  sl<HomeBloc>()..add(GetRecipeEvent()),
               child: const HomePage(),
             ),
           );

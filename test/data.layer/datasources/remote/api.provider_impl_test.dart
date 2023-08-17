@@ -62,7 +62,7 @@ void main() {
       final result = apiProviderImpl.getRecipe();
       //assert
       expect(result, throwsA(const TypeMatcher<ServerException>()));
-      safePrint("Okay ServerException!!!");
+      // safePrint("Okay ServerException!!!");
     });
 
   });

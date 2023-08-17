@@ -13,12 +13,12 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  late final HomeBloc _bloc;
+  // late final HomeBloc _bloc;
 
   @override
   void initState() {
-    _bloc = BlocProvider.of<HomeBloc>(context);
-    _bloc.add(GetRecipeEvent());
+    // _bloc = BlocProvider.of<HomeBloc>(context);
+    // _bloc.add(GetRecipeEvent());
     super.initState();
   }
 
@@ -66,6 +66,7 @@ class CenteredMessage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
+      key: const ValueKey('centered_message'),
       child: Text(message),
     );
   }
@@ -79,6 +80,7 @@ class CenteredLoading extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Center(
+      key: ValueKey('centered_loading'),
       child: CircularProgressIndicator(),
     );
   }
@@ -93,6 +95,7 @@ class HomeMenu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
+      key: const ValueKey('home_menu'),
       child: Container(
         margin: const EdgeInsets.only(left: 16.0, right: 16.0, top: 16.0),
         child: GuidedRecipes(recipes: recipes),

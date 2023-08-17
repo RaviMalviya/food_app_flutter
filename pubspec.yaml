@@ -28,6 +28,8 @@ dev_dependencies:
   test: ^1.24.1
   mockito: ^5.4.2
   build_runner: ^2.4.6
+  mocktail: ^1.0.0
+  bloc_test: ^9.1.4
 
 flutter:
   uses-material-design: true
