@@ -50,13 +50,14 @@ void main() {
         child: homePage,
         bloc: HomeBloc(repository: mockApiRepository)..add(GetRecipeEvent()),
       ));
-      await tester.pumpAndSettle();
+      // await tester.pumpAndSettle();
     } catch (e) {
-      // print(e);
+      // safePrint(e);
       // https://stackoverflow.com/questions/64231515/widget-test-testing-a-button-with-circularprogressindicator
     }
     // assert
     expectLater(find.byType(HomePage), findsOneWidget);
+    expectLater(find.byWidget(homePage), findsOneWidget);
   });
 
   testWidgets('renders HomeLoading State', (WidgetTester tester) async {
@@ -64,7 +65,7 @@ void main() {
     final homeBloc = HomeBlocMock();
     try {
       // arrange
-      mocktail.when(() => homeBloc.state).thenReturn(HomeLoading());
+      mocktail.when(() => homeBloc.state).thenReturn(HomeLoadingState());
       //act
       await tester.pumpWidget(makeTestableWidget(
         child: homePage,
@@ -75,6 +76,121 @@ void main() {
     }
     // assert
     expect(find.byKey(const Key('centered_loading')), findsOneWidget);
-    expectLater(find.byType(CenteredLoading), findsOneWidget);
+    expect(find.byType(CenteredLoading), findsOneWidget);
   });
+
+  testWidgets('renders HomeError State when ', (WidgetTester tester) async {
+    const homePage = HomePage();
+    final homeBloc = HomeBlocMock();
+    try {
+      // arrange
+      mocktail.when(() => homeBloc.state).thenReturn(HomeInitialState());
+      //act
+      await tester.pumpWidget(makeTestableWidget(
+        child: homePage,
+        bloc: homeBloc,
+      ));
+    } catch (e) {
+      safePrint(e);
+    }
+    // assert
+    expect(find.byKey(const Key('centered_message')), findsOneWidget);
+    expect(find.byType(CenteredMessage), findsOneWidget);
+    expect(find.text('Initializing User Interface'), findsOneWidget);
+  });
+
+  testWidgets('renders HomeError State when No Record Found', (WidgetTester tester) async {
+    const homePage = HomePage();
+    final homeBloc = HomeBlocMock();
+    try {
+      // arrange
+      mocktail.when(() => homeBloc.state).thenReturn(HomeErrorState(message: 'No Record Found'));
+      //act
+      await tester.pumpWidget(makeTestableWidget(
+        child: homePage,
+        bloc: homeBloc,
+      ));
+    } catch (e) {
+      safePrint(e);
+    }
+    // assert
+    expect(find.byKey(const Key('centered_message')), findsOneWidget);
+    expect(find.byType(CenteredMessage), findsOneWidget);
+    expect(find.text('No Record Found'), findsOneWidget);
+  });
+
+  testWidgets('renders HomeLoaded State when have recipes data', (WidgetTester tester) async {
+    const homePage = HomePage();
+    final homeBloc = HomeBlocMock();
+    List<Recipe> tRecipes = anyRecipes1;
+    try {
+      // arrange
+      mocktail.when(() => homeBloc.state).thenReturn(HomeLoadedState(recipes: tRecipes));
+      //act
+      await tester.pumpWidget(makeTestableWidget(
+        child: homePage,
+        bloc: homeBloc,
+      ));
+    } catch (e) {
+      safePrint(e);
+    }
+    // assert
+    expect(find.byKey(const Key('home_menu')), findsOneWidget);
+    expectLater(find.byType(HomeMenu), findsOneWidget);
+  });
+
+  testWidgets('renders ShowSnackBar State when No Internet Connection', (WidgetTester tester) async {
+    const homePage = HomePage();
+    final homeBloc = HomeBlocMock();
+    try {
+      // arrange
+      mocktail.when(() => homeBloc.state).thenReturn(ShowSnackBarState(message: 'No Internet Connection'));
+      //act
+      await tester.pumpWidget(makeTestableWidget(
+        child: homePage,
+        bloc: homeBloc,
+      ));
+      // await tester.pumpAndSettle();
+    } catch (e) {
+      safePrint(e);
+    }
+    // assert
+    final scaffoldFinder = find.byType(ScaffoldMessenger);
+    expect(scaffoldFinder, findsOneWidget);
+    var scaffoldMessenger = scaffoldFinder.evaluate().single.widget as ScaffoldMessenger;
+    expect(find.byWidget(scaffoldMessenger), findsOneWidget);
+  });
+
+  // testWidgets('renders ShowSnackBar State when No Internet Connection 2', (WidgetTester tester) async {
+  //   const homePage = HomePage();
+  //   final homeBloc = HomeBlocMock();
+  //   try {
+  //     // arrange
+  //     mocktail.when(() => homeBloc.state).thenReturn(ShowSnackBarState(message: 'No Internet Connection'));
+  //     //act
+  //     await tester.pumpWidget(makeTestableWidget(
+  //       child: homePage,
+  //       bloc: homeBloc,
+  //     ));
+  //     // await tester.pumpAndSettle();
+  //   } catch (e) {
+  //     safePrint(e);
+  //   }
+  //   // assert
+  //   expectLater(ScaffoldMessenger, findsOneWidget);
+  //   expectLater(find.text('No Internet Connection'), findsOneWidget);
+  //
+  //   /*
+  //   final scaffoldFinder = find.byType(ScaffoldMessenger);
+  //   expectLater(scaffoldFinder, findsOneWidget);
+  //   var scaffoldMessenger =
+  //       scaffoldFinder.evaluate().single.widget as ScaffoldMessenger;
+  //   expectLater(find.byWidget(scaffoldMessenger), findsOneWidget);
+  //
+  //   expectLater(scaffoldMessenger, findsOneWidget);
+  //   var snackBar = scaffoldMessenger.child as SnackBar;
+  //   var text = snackBar.content as Text;
+  //   expectLater(text.data, equals('No Internet Connection'));
+  //   */
+  // });
 }

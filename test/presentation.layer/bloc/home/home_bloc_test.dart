@@ -20,7 +20,7 @@ void main() {
   });
 
   test('initial state is correct', () {
-    expect(bloc.state, equals(HomeInitial()));
+    expect(bloc.state, equals(HomeInitialState()));
   });
 
   group('GetRecipeEvent', () {
@@ -53,9 +53,9 @@ void main() {
 
       //assert Later
       final expectedStates = [
-        HomeLoading(),
-        ShowSnackBar(message: ErrorMessage.noInternet.text),
-        HomeError(message: 'No Record Found')
+        HomeLoadingState(),
+        ShowSnackBarState(message: ErrorMessage.noInternet.text),
+        HomeErrorState(message: 'No Record Found')
       ];
       expectLater(bloc.stream, emitsInOrder(expectedStates));
 
@@ -71,9 +71,9 @@ void main() {
 
           //assert Later
           final expectedStates = [
-            HomeLoading(),
-            ShowSnackBar(message: ErrorMessage.server.text),
-            HomeError(message: 'No Record Found')
+            HomeLoadingState(),
+            ShowSnackBarState(message: ErrorMessage.server.text),
+            HomeErrorState(message: 'No Record Found')
           ];
           expectLater(bloc.stream, emitsInOrder(expectedStates));
 

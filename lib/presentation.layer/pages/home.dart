@@ -37,18 +37,18 @@ class _HomePageState extends State<HomePage> {
       ),
       body: BlocConsumer<HomeBloc, HomeState>(
         builder: (context, state) {
-          if (state is HomeLoading) {
+          if (state is HomeLoadingState) {
             return const CenteredLoading();
-          } else if (state is HomeError) {
+          } else if (state is HomeErrorState) {
             return CenteredMessage(message: state.message);
-          } else if (state is HomeLoaded) {
+          } else if (state is HomeLoadedState) {
             return HomeMenu(recipes: state.recipes);
           } else {
-            return const CenteredMessage(message: 'Something Went Wrong');
+            return const CenteredMessage(message: 'Initializing User Interface');
           }
         },
         listener: (context, state) {
-          if (state is ShowSnackBar) {
+          if (state is ShowSnackBarState) {
             context.showSnackBarView(state.message);
           }
         },
