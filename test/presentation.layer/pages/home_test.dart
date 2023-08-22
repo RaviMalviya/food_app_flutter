@@ -144,53 +144,33 @@ void main() {
     final homeBloc = HomeBlocMock();
     try {
       // arrange
-      mocktail.when(() => homeBloc.state).thenReturn(ShowSnackBarState(message: 'No Internet Connection'));
+      mocktail.when(() => homeBloc.state).thenReturn(HomeInitialState());
+      whenListen(homeBloc,   Stream.fromIterable([ShowSnackBarState(message: 'No Internet Connection')]));
       //act
       await tester.pumpWidget(makeTestableWidget(
         child: homePage,
         bloc: homeBloc,
       ));
-      // await tester.pumpAndSettle();
     } catch (e) {
       safePrint(e);
     }
     // assert
-    final scaffoldFinder = find.byType(ScaffoldMessenger);
-    expect(scaffoldFinder, findsOneWidget);
-    var scaffoldMessenger = scaffoldFinder.evaluate().single.widget as ScaffoldMessenger;
-    expect(find.byWidget(scaffoldMessenger), findsOneWidget);
+    await tester.pump();
+    expect(find.byType(ScaffoldMessenger), findsOneWidget);
+    expect(find.byKey(const Key('my_show_snackBar_view')), findsOneWidget);
+    expect(find.text('No Internet Connection'), findsOneWidget);
   });
 
-  // testWidgets('renders ShowSnackBar State when No Internet Connection 2', (WidgetTester tester) async {
-  //   const homePage = HomePage();
-  //   final homeBloc = HomeBlocMock();
-  //   try {
-  //     // arrange
-  //     mocktail.when(() => homeBloc.state).thenReturn(ShowSnackBarState(message: 'No Internet Connection'));
-  //     //act
-  //     await tester.pumpWidget(makeTestableWidget(
-  //       child: homePage,
-  //       bloc: homeBloc,
-  //     ));
-  //     // await tester.pumpAndSettle();
-  //   } catch (e) {
-  //     safePrint(e);
-  //   }
-  //   // assert
-  //   expectLater(ScaffoldMessenger, findsOneWidget);
-  //   expectLater(find.text('No Internet Connection'), findsOneWidget);
-  //
-  //   /*
-  //   final scaffoldFinder = find.byType(ScaffoldMessenger);
-  //   expectLater(scaffoldFinder, findsOneWidget);
-  //   var scaffoldMessenger =
-  //       scaffoldFinder.evaluate().single.widget as ScaffoldMessenger;
-  //   expectLater(find.byWidget(scaffoldMessenger), findsOneWidget);
-  //
-  //   expectLater(scaffoldMessenger, findsOneWidget);
-  //   var snackBar = scaffoldMessenger.child as SnackBar;
-  //   var text = snackBar.content as Text;
-  //   expectLater(text.data, equals('No Internet Connection'));
-  //   */
-  // });
+  /*
+    final scaffoldFinder = find.byType(ScaffoldMessenger);
+    expectLater(scaffoldFinder, findsOneWidget);
+    var scaffoldMessenger =
+        scaffoldFinder.evaluate().single.widget as ScaffoldMessenger;
+    expectLater(find.byWidget(scaffoldMessenger), findsOneWidget);
+
+    expectLater(scaffoldMessenger, findsOneWidget);
+    var snackBar = scaffoldMessenger.child as SnackBar;
+    var text = snackBar.content as Text;
+    expectLater(text.data, equals('No Internet Connection'));
+    */
 }
